@@ -1,4 +1,4 @@
-import GridGenerator from "./components/GridGenerator"
+import GridGenerator from "./sections/GridGenerator"
 
 function App() {
   return (

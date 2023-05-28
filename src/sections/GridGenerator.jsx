@@ -45,11 +45,10 @@ grid-template-rows: repeat(${layout[0].h}, 1fr);`;
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">CSS Grid Layout Generator</h1>
-
-      <div className="grid grid-cols-2 gap-4">
-        <div style={{ minWidth: '300px' }}>
+    <div className="container">
+      <div className="flex  min-h-screen">
+        <div className='shadow-2xl bg-teal-900 p-3 w-72'>
+          <h1 className="text-2xl text-white font-bold mb-4">GRIDOLIA</h1>
           <div className="mb-4">
             <button
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -63,14 +62,8 @@ grid-template-rows: repeat(${layout[0].h}, 1fr);`;
             {gridItems.map((item) => (
               <div
                 key={item.i}
-                className="bg-white rounded shadow p-2 mb-4 relative"
+                className="bg-white rounded shadow p-2 mb-4 w-68 flex justify-between"
               >
-                <button
-                  className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 absolute top-0 right-0"
-                  onClick={() => handleRemoveBox(item.i)}
-                >
-                  Remove
-                </button>
                 <input
                   type="text"
                   value={item.label || ''}
@@ -78,6 +71,12 @@ grid-template-rows: repeat(${layout[0].h}, 1fr);`;
                   className="border border-gray-300 rounded px-2 py-1"
                   placeholder="Label"
                 />
+                <button
+                  className="bg-red-500 text-white w-10 px-2 py-1 rounded hover:bg-red-600"
+                  onClick={() => handleRemoveBox(item.i)}
+                >
+                  x
+                </button>
               </div>
             ))}
 
@@ -90,7 +89,7 @@ grid-template-rows: repeat(${layout[0].h}, 1fr);`;
           </div>
         </div>
 
-        <div>
+        <div className='bg-teal-100 flex-grow'>
           <ResponsiveGridLayout
             className="layout"
             layouts={{ lg: layout }}
