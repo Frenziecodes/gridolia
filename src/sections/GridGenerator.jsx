@@ -25,7 +25,7 @@ const Gridiola = () => {
   return (
     <div className="flex min-h-screen">
       <div className="w-72 bg-teal-600 p-4">
-        <h2 className="text-2xl font-bold mb-4">Gridiola</h2>
+        <h2 className="text-2xl font-bold mb-4">GRIDIOLA</h2>
         <div className="mb-4">
           <label className="block font-medium mb-1">Number of Rows</label>
           <input
