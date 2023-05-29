@@ -1,9 +1,9 @@
-import GridGenerator from "./sections/GridGenerator"
+import Gridiola from "./sections/GridGenerator"
 
 function App() {
   return (
     <>
-      <GridGenerator/>
+      <Gridiola/>
     </>
   )
 }
