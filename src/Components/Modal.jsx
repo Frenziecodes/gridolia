@@ -14,7 +14,7 @@ const Modal = ({children}) => {
 const ModalButton = ({title,id}) => {
     return (
         <>
-            <label htmlFor={id} className="inline-block px-3 py-2 mt-2 font-medium text-white bg-teal-900 rounded cursor-pointer hover:bg-teal-800">{title}</label>
+            <label htmlFor={id} className="inline-block px-3 py-2 mt-2 font-medium text-white bg-teal-900 rounded cursor-pointer text-center hover:bg-teal-800">{title}</label>
             <input id={id} type="checkbox" className="hidden peer"  />
         </>
     );
