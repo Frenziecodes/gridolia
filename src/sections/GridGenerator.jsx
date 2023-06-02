@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import {useState} from 'react';
+import copy from 'copy-to-clipboard';
+import Modal from '../Components/Modal';
 
 const Gridiola = () => {
   const [numRows, setNumRows] = useState(3);
@@ -7,6 +9,7 @@ const Gridiola = () => {
   const [columnWidth, setColumnWidth] = useState(100);
   const [rowGap, setRowGap] = useState(10);
   const [gridLayout, setGridLayout] = useState([]);
+  const [isTextCopied, setIsTextCopied] = useState(false);
 
   const generateGridLayout = () => {
     const layout = [];
@@ -21,6 +24,26 @@ const Gridiola = () => {
   const handleGridPropertiesChange = () => {
     generateGridLayout();
   };
+
+  const generateCss = () => {
+    const arr = ["display: grid;"];
+    if(numRows) {
+      arr.push(`grid-template-rows: repeat(${numRows}, ${rowHeight}px);`);
+    }
+    if (numColumns) {
+      arr.push(`grid-template-columns: repeat(${numColumns}, ${columnWidth}px);`);
+    }
+    if(rowGap) {
+      arr.push(`gap: ${rowGap}px;`)
+    }
+    return arr;
+  }
+
+  const handleCopy = () => {
+    setIsTextCopied(true);
+    setTimeout(() => setIsTextCopied(false), 3000);
+    return generateCss().join("\n");
+  }
 
   return (
     <div className="flex min-h-screen">
@@ -77,8 +100,23 @@ const Gridiola = () => {
         >
           Generate Grid
         </button>
+        <Modal.Button id="modal" title="Generate Code" />        
+        <Modal>
+          <div className="z-50 flex flex-col items-center justify-center h-auto p-4 space-x-4 space-y-5 bg-white rounded-lg">
+            <code className="p-2 border-l-2 bg-slate-50 h-full">
+              <ul>
+                &#123;
+                  {generateCss().map((item, i) => <li className="list-none pl-4" key={i}>{item}</li>)}
+                &#125;
+              </ul>
+            </code>
+            <div className="flex justify-evenly w-full">
+              <button className="px-4 py-2 font-medium text-white bg-teal-900 rounded hover:bg-teal-800" onClick={() => copy(handleCopy())}>{isTextCopied ? "Copied" : "Copy"}</button>
+              <label htmlFor="modal" className="inline-block px-3 py-2 font-medium text-teal-900 bg-white rounded cursor-pointer hover:bg-slate-300">Close</label>
+            </div>
+          </div>
+        </Modal>
       </div>
-
       <div className="w-full p-4 bg-teal-100">
         <h2 className="text-2xl font-bold mb-4 ">Grid Layout Preview</h2>
         <div
