@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 const Modal = ({children}) => {
   return (
     <div className="fixed inset-0 items-center justify-center hidden w-full h-full bg-transparent peer-checked:flex">
-        <div className="absolute inset-0 w-full h-full opacity-80 bg-slate-400" />
-        <div className="z-50 flex flex-col items-center justify-center h-auto p-4 space-x-4 space-y-5 bg-white rounded-lg">
+        <div className="absolute inset-0 w-full h-full opacity-80 bg-gray-700" />
+        <div className="z-50 flex flex-col items-center justify-center h-auto p-4 space-x-4 space-y-5 bg-gray-300 rounded-lg">
             {children}
         </div>
     </div>
