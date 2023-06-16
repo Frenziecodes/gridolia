@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import copy from 'copy-to-clipboard';
 import Modal from '../Components/Modal';
 
@@ -27,28 +27,28 @@ const Gridiola = () => {
 
   const generateCss = () => {
     const arr = ["display: grid;"];
-    if(numRows) {
+    if (numRows) {
       arr.push(`grid-template-rows: repeat(${numRows}, ${rowHeight}px);`);
     }
     if (numColumns) {
       arr.push(`grid-template-columns: repeat(${numColumns}, ${columnWidth}px);`);
     }
-    if(rowGap) {
-      arr.push(`gap: ${rowGap}px;`)
+    if (rowGap) {
+      arr.push(`gap: ${rowGap}px;`);
     }
     return arr;
-  }
+  };
 
   const handleCopy = () => {
     setIsTextCopied(true);
     setTimeout(() => setIsTextCopied(false), 3000);
-    return generateCss().join("\n");
-  }
+    return generateCss().join('\n');
+  };
 
   return (
-    <div className="flex min-h-screen">
-      <div className="w-72 bg-teal-600 p-4">
-        <h2 className="text-2xl font-bold mb-4">GRIDIOLA</h2>
+    <div className="flex flex-col lg:flex-row min-h-screen">
+      <div className="lg:w-72 bg-teal-600 p-4">
+        <h2 className="text-2xl font-bold mb-4 text-center">GRIDIOLA</h2>
         <div className="mb-4">
           <label className="block font-medium mb-1">Number of Rows</label>
           <input
@@ -95,24 +95,38 @@ const Gridiola = () => {
           />
         </div>
         <button
-          className="bg-teal-900 hover:bg-teal-800 text-white font-medium py-2 px-4 rounded"
+          className="  bg-gradient-to-r from-teal-700 text- to-teal-900 text-white font-medium py-2 px-4 rounded "
           onClick={handleGridPropertiesChange}
         >
           Generate Grid
         </button>
-        <Modal.Button id="modal" title="Generate Code" />        
+        <Modal.Button id="modal" title="Generate Code" />
         <Modal>
-          <div className="z-50 flex flex-col items-center justify-center h-auto p-4 space-x-4 space-y-5 bg-white rounded-lg">
+          <div className="from-teal-700 text- to-teal-900 z-50 flex flex-col items-center justify-center h-auto p-4 space-x-4 space-y-5 bg-white rounded-lg">
             <code className="p-2 border-l-2 bg-slate-50 h-full">
               <ul>
-                &#123;
-                  {generateCss().map((item, i) => <li className="list-none pl-4" key={i}>{item}</li>)}
-                &#125;
+                {'{'}
+                {generateCss().map((item, i) => (
+                  <li className="list-none pl-4" key={i}>
+                    {item}
+                  </li>
+                ))}
+                {'}'}
               </ul>
             </code>
             <div className="flex justify-evenly w-full">
-              <button className="px-4 py-2 font-medium text-white bg-teal-900 rounded hover:bg-teal-800" onClick={() => copy(handleCopy())}>{isTextCopied ? "Copied" : "Copy"}</button>
-              <label htmlFor="modal" className="inline-block px-3 py-2 font-medium text-teal-900 bg-white rounded cursor-pointer hover:bg-slate-300">Close</label>
+              <button
+                className="px-4 py-2 font-medium text-white bg-teal-900 rounded hover:bg-teal-800"
+                onClick={() => copy(handleCopy())}
+              >
+                {isTextCopied ? 'Copied' : 'Copy'}
+              </button>
+              <label
+                htmlFor="modal"
+                className="inline-block px-3 py-2 font-medium text-teal-900 bg-white rounded cursor-pointer hover:bg-slate-300"
+              >
+                Close
+              </label>
             </div>
           </div>
         </Modal>
