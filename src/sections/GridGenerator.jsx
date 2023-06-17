@@ -12,6 +12,7 @@ const Gridiola = () => {
   const [gridLayout, setGridLayout] = useState([]);
   const [isTextCopied, setIsTextCopied] = useState(false);
   const [isBannerVisible, setIsBannerVisible] = useState(true);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const handleRecoverData = (recoveredNumRows) => {
     console.log(true)
@@ -28,6 +29,12 @@ const Gridiola = () => {
   const save = () => {
     const l = [numRows, numColumns, rowHeight, columnWidth, rowGap];
     localStorage.setItem('saver_data', l);
+    setShowSuccessMessage(true);
+
+    // Reset the success message after 3 seconds
+    setTimeout(() => {
+      setShowSuccessMessage(false);
+    }, 3000);
   };
 
   const generateGridLayout = () => {
@@ -66,7 +73,25 @@ const Gridiola = () => {
   
   return (
     
+    
+    
     <div className="flex flex-col lg:flex-row min-h-screen">
+      {showSuccessMessage && (
+        <div className="fixed inset-0 flex items-center justify-center">
+        <div className="bg-green-500 text-white px-4 py-2 rounded flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 inline-block mr-2 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+          </svg>
+          <span className="inline-block align-middle">Action successfully completed!</span>
+        </div>
+      </div>
+      )}
       
       <div className="lg:w-72 bg-teal-600 p-4">
         <h2 className="text-2xl font-bold mb-4 text-center">GRIDIOLA</h2>
