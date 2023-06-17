@@ -1,11 +1,11 @@
-import Gridiola from "./sections/GridGenerator"
+import Gridiola from "./sections/GridGenerator";
 
 function App() {
   return (
     <>
-      <Gridiola/>
+      <Gridiola />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
