@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import copy from 'copy-to-clipboard';
 import Modal from '../Components/Modal';
-
+import Header from './header';
 const Gridiola = () => {
+  
   const [numRows, setNumRows] = useState(3);
   const [numColumns, setNumColumns] = useState(3);
   const [rowHeight, setRowHeight] = useState(100);
@@ -10,6 +11,24 @@ const Gridiola = () => {
   const [rowGap, setRowGap] = useState(10);
   const [gridLayout, setGridLayout] = useState([]);
   const [isTextCopied, setIsTextCopied] = useState(false);
+  const [isBannerVisible, setIsBannerVisible] = useState(true);
+
+  const handleRecoverData = (recoveredNumRows) => {
+    console.log(true)
+    setNumRows(recoveredNumRows[0])
+    setNumColumns(recoveredNumRows[1])
+    setRowHeight(recoveredNumRows[2])
+    setColumnWidth(recoveredNumRows[3])
+    setRowGap(recoveredNumRows[4])
+    localStorage.clear()
+    setIsBannerVisible(false);
+
+  };
+
+  const save = () => {
+    const l = [numRows, numColumns, rowHeight, columnWidth, rowGap];
+    localStorage.setItem('saver_data', l);
+  };
 
   const generateGridLayout = () => {
     const layout = [];
@@ -44,9 +63,11 @@ const Gridiola = () => {
     setTimeout(() => setIsTextCopied(false), 3000);
     return generateCss().join('\n');
   };
-
+  
   return (
+    
     <div className="flex flex-col lg:flex-row min-h-screen">
+      
       <div className="lg:w-72 bg-teal-600 p-4">
         <h2 className="text-2xl font-bold mb-4 text-center">GRIDIOLA</h2>
         <div className="mb-4">
@@ -130,8 +151,19 @@ const Gridiola = () => {
             </div>
           </div>
         </Modal>
+        
+        <button 
+        className=' mt-5 bg-gradient-to-r from-teal-700 text- to-teal-900 text-white font-medium py-2 px-4 rounded '
+        onClick={() => copy(save())}
+        >
+          Save Grid
+        </button>
       </div>
-      <div className="w-full p-4 bg-teal-100">
+      <div className="w-full  bg-teal-100">
+        {isBannerVisible && (
+          <Header onRecoverData={handleRecoverData}></Header>
+
+        )}
         <h2 className="text-2xl font-bold mb-4 ">Grid Layout Preview</h2>
         <div
           className="grid"
