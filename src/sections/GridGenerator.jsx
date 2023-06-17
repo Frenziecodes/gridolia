@@ -1,7 +1,9 @@
+
 import { useState } from 'react';
 import copy from 'copy-to-clipboard';
 import Modal from '../Components/Modal';
 import Header from './header';
+
 const Gridiola = () => {
   
   const [numRows, setNumRows] = useState(3);
@@ -57,7 +59,9 @@ const Gridiola = () => {
       arr.push(`grid-template-rows: repeat(${numRows}, ${rowHeight}px);`);
     }
     if (numColumns) {
-      arr.push(`grid-template-columns: repeat(${numColumns}, ${columnWidth}px);`);
+      arr.push(
+        `grid-template-columns: repeat(${numColumns}, ${columnWidth}px);`
+      );
     }
     if (rowGap) {
       arr.push(`gap: ${rowGap}px;`);
@@ -68,7 +72,7 @@ const Gridiola = () => {
   const handleCopy = () => {
     setIsTextCopied(true);
     setTimeout(() => setIsTextCopied(false), 3000);
-    return generateCss().join('\n');
+    return generateCss().join("\n");
   };
   
   return (
@@ -151,13 +155,13 @@ const Gridiola = () => {
           <div className="from-teal-700 text- to-teal-900 z-50 flex flex-col items-center justify-center h-auto p-4 space-x-4 space-y-5 bg-white rounded-lg">
             <code className="p-2 border-l-2 bg-slate-50 h-full">
               <ul>
-                {'{'}
+                {"{"}
                 {generateCss().map((item, i) => (
                   <li className="list-none pl-4" key={i}>
                     {item}
                   </li>
                 ))}
-                {'}'}
+                {"}"}
               </ul>
             </code>
             <div className="flex justify-evenly w-full">
@@ -165,7 +169,7 @@ const Gridiola = () => {
                 className="px-4 py-2 font-medium text-white bg-teal-900 rounded hover:bg-teal-800"
                 onClick={() => copy(handleCopy())}
               >
-                {isTextCopied ? 'Copied' : 'Copy'}
+                {isTextCopied ? "Copied" : "Copy"}
               </button>
               <label
                 htmlFor="modal"
