@@ -1,9 +1,7 @@
-
 import { useState } from 'react';
 import copy from 'copy-to-clipboard';
 import Modal from '../Components/Modal';
 import Header from './header';
-
 const Gridiola = () => {
   
   const [numRows, setNumRows] = useState(3);
@@ -15,6 +13,9 @@ const Gridiola = () => {
   const [isTextCopied, setIsTextCopied] = useState(false);
   const [isBannerVisible, setIsBannerVisible] = useState(true);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [color, setColor] = useState('#ff0000');
+  
+
 
   const handleRecoverData = (recoveredNumRows) => {
     console.log(true)
@@ -23,13 +24,14 @@ const Gridiola = () => {
     setRowHeight(recoveredNumRows[2])
     setColumnWidth(recoveredNumRows[3])
     setRowGap(recoveredNumRows[4])
+    setColor(recoveredNumRows[5])
     localStorage.clear()
     setIsBannerVisible(false);
 
   };
 
   const save = () => {
-    const l = [numRows, numColumns, rowHeight, columnWidth, rowGap];
+    const l = [numRows, numColumns, rowHeight, columnWidth, rowGap, color];
     localStorage.setItem('saver_data', l);
     setShowSuccessMessage(true);
 
@@ -43,11 +45,12 @@ const Gridiola = () => {
     const layout = [];
     for (let i = 0; i < numRows; i++) {
       for (let j = 0; j < numColumns; j++) {
-        layout.push({ row: i, column: j });
+        layout.push({ row: i, column: j, color: color });
       }
     }
     setGridLayout(layout);
   };
+  
 
   const handleGridPropertiesChange = () => {
     generateGridLayout();
@@ -59,20 +62,19 @@ const Gridiola = () => {
       arr.push(`grid-template-rows: repeat(${numRows}, ${rowHeight}px);`);
     }
     if (numColumns) {
-      arr.push(
-        `grid-template-columns: repeat(${numColumns}, ${columnWidth}px);`
-      );
+      arr.push(`grid-template-columns: repeat(${numColumns}, ${columnWidth}px);`);
     }
     if (rowGap) {
       arr.push(`gap: ${rowGap}px;`);
     }
+    arr.push(`background-color: ${color}`)
     return arr;
   };
 
   const handleCopy = () => {
     setIsTextCopied(true);
     setTimeout(() => setIsTextCopied(false), 3000);
-    return generateCss().join("\n");
+    return generateCss().join('\n');
   };
   
   return (
@@ -144,6 +146,16 @@ const Gridiola = () => {
             onChange={(e) => setRowGap(parseInt(e.target.value))}
           />
         </div>
+        <div className="mb-4">
+          <label className="block font-medium mb-1">Color</label>
+          <input
+            type="color"
+            className="w-full rounded border-gray-300 px-2 py-2"
+            value={color}
+            onChange={(event) => setColor(event.target.value)}
+            
+          />
+        </div>
         <button
           className="  bg-gradient-to-r from-teal-700 text- to-teal-900 text-white font-medium py-2 px-4 rounded "
           onClick={handleGridPropertiesChange}
@@ -155,13 +167,13 @@ const Gridiola = () => {
           <div className="from-teal-700 text- to-teal-900 z-50 flex flex-col items-center justify-center h-auto p-4 space-x-4 space-y-5 bg-white rounded-lg">
             <code className="p-2 border-l-2 bg-slate-50 h-full">
               <ul>
-                {"{"}
+                {'{'}
                 {generateCss().map((item, i) => (
                   <li className="list-none pl-4" key={i}>
                     {item}
                   </li>
                 ))}
-                {"}"}
+                {'}'}
               </ul>
             </code>
             <div className="flex justify-evenly w-full">
@@ -169,7 +181,7 @@ const Gridiola = () => {
                 className="px-4 py-2 font-medium text-white bg-teal-900 rounded hover:bg-teal-800"
                 onClick={() => copy(handleCopy())}
               >
-                {isTextCopied ? "Copied" : "Copy"}
+                {isTextCopied ? 'Copied' : 'Copy'}
               </button>
               <label
                 htmlFor="modal"
@@ -205,12 +217,14 @@ const Gridiola = () => {
           {gridLayout.map((item, index) => (
             <div
               key={index}
-              className="bg-white border border-gray-300 flex justify-center items-center"
+              className="border border-gray-300 flex justify-center items-center"
+              style={{ backgroundColor: item.color }}
             >
               {`${item.row + 1}, ${item.column + 1}`}
             </div>
           ))}
         </div>
+
       </div>
     </div>
   );
